@@ -18,12 +18,6 @@ const test6x6 = [
   [0,0,0,0,0,0]
 ]
 
-describe("isAdjacent", function() {
-  it("should return true when a given value is adjacent to a given coordinate", function() {
-    expect(isAdjacent(1, 0, 0, test6x6)).toBe(true)
-  })
-})
-
 describe("outerEdgesOf", function() {
   it("should outline the outer edges of an element", function () {
     expect(outerEdgesOf(test6x6)).toEqual([
@@ -32,11 +26,6 @@ describe("outerEdgesOf", function() {
       [1,0,0,0,0,1],
       [1,0,0,0,1,1],
       [1,1,1,1,1,0]
-    ])
-    expect(outerEdgesOf(test3x3)).toEqual([
-      [1,1,1],
-      [1,0,1],
-      [1,1,1]
     ])
   })
 })
@@ -69,7 +58,7 @@ describe("shrink", function() {
     expect(shrink(test6x6)).toEqual([
       [0,0,0,0,0,0],
       [0,0,0,0,0,0],
-      [0,0,1,0,0,0],
+      [0,0,1,1,0,0],
       [0,0,0,0,0,0],
       [0,0,0,0,0,0]
     ])
