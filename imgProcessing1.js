@@ -1,11 +1,13 @@
 function outerEdgesOf(matrix){
   // returns an array with the same dimensions as arr.
   // where the outer edges of the features of arr are highlighted (1)
-
+  //if a cell is a 0 with an adjacent 1 in one of 8 adjacent cells
+  //it is on the outer edge
 }
 
 function innerEdgesOf(matrix){
-  
+  //iterate over matrix
+  //if a cell is a 1 with an adjacent 0 in one of 8 adjacent cells, it is on the inner edge
 }
 
 function grow(matrix){
@@ -18,40 +20,34 @@ function shrink(matrix){
   // where the the features have shrunk
 }
 
-function leftEdge(row) {
-  return row.indexOf(1)
+function mtrxEach(func, matrix) {
+  matrix.forEach(row => row.forEach((val, i, row) => {
+    func(val, i, row)
+  }))
 }
 
-function rightEdge(row) {
-  return row.lastIndexOf(1)
+function isAdjacent(val, x, y, matrix) {
+  //top left
+  if (matrix[y - 1] && matrix[y - 1][x - 1] !== val) return false;
+  //above
+  else if (matrix[y] && matrix[y - 1][x] !== val) return false;
+  //above right 
+  //left
+  else if (matrix[y] && matrix[y][x - 1] !== val) return false;
+  //skip center
+  //right
+  else if (matrix[y] && matrix[y][x + 1] !== val) return false;
+  //bottom left
+  else if (matrix[y + 1] && matrix[y + 1][x - 1] !== val) return false;
+  //bottom right
+  else if (matrix[y + 1] && matrix[y + 1][x + 1] !== val) return false;
+  else return true;
 }
 
-function leftEdges(matrix) {
-  return matrix.map(leftEdge)
+function isOnOuter(val, x, y, matrix) {
+  return matrix[y][x] === 0 && isAdjacent(1, x, y, matrix)
 }
 
-function rightEdges(matrix) {
-  return matrix.map(rightEdge)
-}
-
-function topEdges(matrix) {
-  return leftEdges(transpose(matrix))
-}
-
-function bottomEdges(matrix) {
-  return rightEdges(transpose(matrix))
-}
-
-function transpose(matrix) {
-  let newMatrix = []
-  for (let i = 0; i < matrix[0].length; i++) { 
-    //use length of matrix[0], a row, because the row length will become the new column height
-    newMatrix.push([])
-  }
-  matrix.forEach((row, y) =>
-    row.forEach((cell,x) =>
-      newMatrix[x][y] = cell //x and y are swapped
-    )
-  )
-  return newMatrix
+function isOnInner(val, x, y, matrix) {
+  return matrix[y][x] === 1 && isAdjacent(0, x, y, matrix)
 }
